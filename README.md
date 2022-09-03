@@ -60,7 +60,6 @@ Automate tests from Automation tools - WebdriverIO and the following test cases:
 
 9. Check that the rental amount per month matches the amount received when passing the test manually.
 
-﻿
 
 ## [Hardcore]
 
@@ -113,5 +112,3 @@ When performing the task, you need to use the capabilities of Selenium WebDriver
 12. Press SEND EMAIL
 
 13. Wait for the letter with the cost calculation and check that the Total Estimated Monthly Cost in the letter matches what is displayed in the calculator
-
-﻿

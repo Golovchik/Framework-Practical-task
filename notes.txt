@@ -1,0 +1,52 @@
+npm init -y
+npx eslint --init
+npm i eslint --save-dev
+npm i mocha --save-dev
+npm i chai --save-dev
+npm init wdio
+npm install geckodriver --save-dev
+npm install wdio-geckodriver-service --save-dev
+npm install moment --save-dev
+npm install @wdio/junit-reporter --save-dev
+npm install dotenv --save-dev
+npm install yargs --save-dev
+
+
+
+// set BROWSER_NAME=firefox&&
+//const browserName = process.env.BROWSER_NAME || 'chrome';
+
+// add --BROWSER_NAME='firefox'
+const browserName = yargs.argv.BROWSER_NAME || 'chrome';
+// npm run test:e2e -- --BROWSER_NAME=firefox
+
+//npm run test:e2e -- --BROWSER_NAME=firefox --suite otherFeature
+//npm run wdio run wdio.conf.js -- --BROWSER_NAME=firefox --suite otherFeature
+
+await page('pricingCalculator').tabBlock.addToEstimateBtn.click();
+await page('pricingCalculator').estimateBlock.emailBtn.click();
+
+const emailYourEstimateEl = await page('pricingCalculator').estimateBlock.emailYourEstimate.item('email');
+await emailYourEstimateEl.waitForDisplayed();
+await emailYourEstimateEl.setValue('');
+
+await page('pricingCalculator').getOutOfFrames();
+
+const urlMailGenerator = 'https://10minutemail.com';
+const urlPricingCalculator = await browser.getUrl();
+await browser.newWindow(urlMailGenerator);
+
+const mailAddressEl = await page('tenMinutEmail').mainContent.copyAddressBtn;
+await mailAddressEl.waitForDisplayed();
+await mailAddressEl.click();
+
+await browser.switchWindow(urlPricingCalculator);
+
+await page('pricingCalculator').goToFrames();
+await browser.keys(['Control', 'v']);
+await page('pricingCalculator').estimateBlock.emailYourEstimate.sendEmailBtn.click();
+await page('pricingCalculator').getOutOfFrames();
+
+await browser.switchWindow(urlMailGenerator);
+
+await browser.pause('50000');
